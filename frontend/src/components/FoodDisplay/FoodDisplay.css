@@ -1,0 +1,99 @@
+.food-display {
+    margin-top: 30px;
+    text-align: center; /* Center the heading */
+}
+
+.food-display h2 {
+    font-size: max(2vw, 24px);
+    font-weight: 600;
+    color: #333;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+/* Stylish underline for the heading */
+.food-display h2::after {
+    content: '';
+    width: 50%;
+    height: 3px;
+    background: linear-gradient(to right, #f1d996, #ee0e0e);
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+/* Food Display Grid */
+.food-display-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(390px, 1fr));
+    margin-top: 30px;
+    gap: 30px;
+    row-gap: 50px;
+    padding: 20px;
+}
+
+/* Individual Food Item */
+.food-item {
+    background: linear-gradient(135deg, #f3c3c3, #f1e9cd); /* Gradient effect */
+    border-radius: 20px; /* Curved structure */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Soft shadow */
+    padding: 20px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Hover effect for food items */
+.food-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Food Image */
+.food-item img {
+    width: 100%;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Image hover effect */
+.food-item:hover img {
+    transform: scale(1.08);
+}
+
+/* Food Name */
+.food-item h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    margin-top: 15px;
+}
+
+/* Price Tag */
+.food-item .price {
+    font-size: 18px;
+    color: #fff;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* Button Styling */
+.food-item .order-btn {
+    background: #fff;
+    color: #ffcb5a;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    border: none;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.food-item .order-btn:hover {
+    background: #ffcb5a;
+    color: #fff;
+}
