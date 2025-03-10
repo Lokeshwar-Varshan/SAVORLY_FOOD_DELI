@@ -19,7 +19,7 @@ const Footer = () => {
                 <h2>COMPANY</h2>
                 <ul>
                     <li>Home</li>
-                    <li>About Us</li>
+                    <li>Mobile-App</li>
                     <li>Delivery</li>
                     <li>Privacy Policy</li>
                 </ul>
