@@ -1,7 +1,9 @@
 import foodModel from "../models/foodModel.js";
+import userModel from "../models/userModel.js";
 import fs from "fs";
 
-// Add food items
+// add food items
+
 const addFood = async (req, res) => {
   let image_filename = `${req.file.filename}`;
   const food = new foodModel({
@@ -12,51 +14,46 @@ const addFood = async (req, res) => {
     image: image_filename,
   });
   try {
-    await food.save();
-    res.json({ success: true, message: "Food Added" });
+    let userData = await userModel.findById(req.body.userId);
+    if (userData && userData.role === "admin") {
+      await food.save();
+      res.json({ success: true, message: "Food Added" });
+    } else {
+      res.json({ success: false, message: "You are not admin" });
+    }
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: "Error" });
   }
 };
 
-// ✅ Define listFood function
+// all foods
 const listFood = async (req, res) => {
   try {
-      const foods = await foodModel.find({});
-      res.status(200).json({ success: true, data: foods });
+    const foods = await foodModel.find({});
+    res.json({ success: true, data: foods });
   } catch (error) {
-      console.error("Database query failed:", error);
-      res.status(500).json({ success: false, message: "Internal Server Error" });
+    console.log(error);
+    res.json({ success: false, message: "Error" });
   }
 };
 
-
-// ✅ Define removeFood function
+// remove food item
 const removeFood = async (req, res) => {
   try {
+    let userData = await userModel.findById(req.body.userId);
+    if (userData && userData.role === "admin") {
       const food = await foodModel.findById(req.body.id);
-      if (!food) {
-          return res.status(404).json({ success: false, message: "Food item not found" });
-      }
-
-      // Delete the associated image file safely
-      fs.unlink(`uploads/${food.image}`, (err) => {
-          if (err) {
-              console.error("Error deleting image:", err);
-          }
-      });
-
-      // Delete the food item from the database
+      fs.unlink(`uploads/${food.image}`, () => {});
       await foodModel.findByIdAndDelete(req.body.id);
-
-      return res.json({ success: true, message: "Food Removed" });
+      res.json({ success: true, message: "Food Removed" });
+    } else {
+      res.json({ success: false, message: "You are not admin" });
+    }
   } catch (error) {
-      console.error(error);
-      return res.status(500).json({ success: false, message: "Internal Server Error" });
+    console.log(error);
+    res.json({ success: false, message: "Error" });
   }
 };
 
-
-// ✅ Export all functions
 export { addFood, listFood, removeFood };
